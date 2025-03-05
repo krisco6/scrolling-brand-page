@@ -94,7 +94,7 @@ async function buildGrid() {
   const cellW = (w - (COLS - 1) * GAP) / COLS;
   const cellH = (h - (ROWS - 1) * GAP) / ROWS;
 
-  let allImgs = await loadImagePaths("https://dl.dropboxusercontent.com/scl/fo/byahkltjog54ksfn8tfk0/ABEcrGlebv1j-RRaVC0A-J4");
+  let allImgs = await loadImagePaths("images");
   if (allImgs.length < ROWS * COLS) return alert("Not enough images!");
 
   let idx = 0;
