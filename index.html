@@ -63,7 +63,7 @@ const SHIFT_INTERVAL = 1000, ANIM_DURATION = 1000;
 const MAX_IMAGES = 9999, FAIL_LIMIT = 30;
 
 /* Load images from Dropbox (direct link) */
-async function loadImagePaths(folder = "https://dl.dropboxusercontent.com/s/yourfolderid") {
+async function loadImagePaths(folder = "images") {
   const exts = ["jpg", "jpeg", "png", "gif", "webp"];
   const checkImage = url => new Promise(res => {
     const img = new Image();
