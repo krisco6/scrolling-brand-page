@@ -50,7 +50,7 @@
     </div>
   </div>
 </div>
-<!-- Bootstrap JS -->
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -62,7 +62,7 @@ const ROWS = 5, COLS = 5, GAP = 10;
 const SHIFT_INTERVAL = 1000, ANIM_DURATION = 1000;
 const MAX_IMAGES = 9999, FAIL_LIMIT = 30;
 
-/* Load images from Dropbox (direct link) */
+/* Load images from a local folder (images/) */
 async function loadImagePaths(folder = "images") {
   const exts = ["jpg", "jpeg", "png", "gif", "webp"];
   const checkImage = url => new Promise(res => {
@@ -78,10 +78,15 @@ async function loadImagePaths(folder = "images") {
       let testUrl = `${folder}/${i}.${e}`;
       if (await checkImage(testUrl)) {
         paths.push(testUrl);
-        found = true; fails = 0; break;
+        found = true; 
+        fails = 0; 
+        break;
       }
     }
-    if (!found) { fails++; if (fails >= FAIL_LIMIT) break; }
+    if (!found) { 
+      fails++; 
+      if (fails >= FAIL_LIMIT) break; 
+    }
   }
   return paths;
 }
@@ -95,7 +100,10 @@ async function buildGrid() {
   const cellH = (h - (ROWS - 1) * GAP) / ROWS;
 
   let allImgs = await loadImagePaths("images");
-  if (allImgs.length < ROWS * COLS) return alert("Not enough images!");
+  if (allImgs.length < ROWS * COLS) {
+    alert("Not enough images!");
+    return;
+  }
 
   let idx = 0;
   for (let r = 0; r < ROWS; r++) {
@@ -125,12 +133,16 @@ async function buildGrid() {
 function shiftRow(r, dir = "left") {
   if (dir === "left") {
     let first = gridData[r][0];
-    for (let c = 0; c < COLS - 1; c++) { gridData[r][c] = gridData[r][c + 1]; }
+    for (let c = 0; c < COLS - 1; c++) { 
+      gridData[r][c] = gridData[r][c + 1]; 
+    }
     gridData[r][COLS - 1] = extraImages.length ? extraImages.shift() : first;
     extraImages.push(first);
   } else {
     let last = gridData[r][COLS - 1];
-    for (let c = COLS - 1; c > 0; c--) { gridData[r][c] = gridData[r][c - 1]; }
+    for (let c = COLS - 1; c > 0; c--) { 
+      gridData[r][c] = gridData[r][c - 1]; 
+    }
     gridData[r][0] = extraImages.length ? extraImages.shift() : last;
     extraImages.push(last);
   }
@@ -152,12 +164,16 @@ function shiftRow(r, dir = "left") {
 function shiftCol(c, dir = "up") {
   if (dir === "up") {
     let topImg = gridData[0][c];
-    for (let r = 0; r < ROWS - 1; r++) { gridData[r][c] = gridData[r + 1][c]; }
+    for (let r = 0; r < ROWS - 1; r++) { 
+      gridData[r][c] = gridData[r + 1][c]; 
+    }
     gridData[ROWS - 1][c] = extraImages.length ? extraImages.shift() : topImg;
     extraImages.push(topImg);
   } else {
     let botImg = gridData[ROWS - 1][c];
-    for (let r = ROWS - 1; r > 0; r--) { gridData[r][c] = gridData[r - 1][c]; }
+    for (let r = ROWS - 1; r > 0; r--) { 
+      gridData[r][c] = gridData[r - 1][c]; 
+    }
     gridData[0][c] = extraImages.length ? extraImages.shift() : botImg;
     extraImages.push(botImg);
   }
